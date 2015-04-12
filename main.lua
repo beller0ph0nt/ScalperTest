@@ -1,9 +1,9 @@
-local MaxSpeed = 10
+п»їlocal MaxSpeed = 10
 local MinSpeed = -10
 
--- Функция, рисующая стандартный игровой объект
--- Вход:
---  gameObject - игровой объект
+-- Р¤СѓРЅРєС†РёСЏ, СЂРёСЃСѓСЋС‰Р°СЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
+-- Р’С…РѕРґ:
+--  gameObject - РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
 local function DrawGameObject(gameObject)
   love.graphics.setColor(gameObject.color)
   love.graphics.rectangle(gameObject.mode,
@@ -13,22 +13,22 @@ local function DrawGameObject(gameObject)
                           gameObject.h)
 end
 
--- Функция, проверяющая столкновение объекта с границами мира
+-- Р¤СѓРЅРєС†РёСЏ, РїСЂРѕРІРµСЂСЏСЋС‰Р°СЏ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ РѕР±СЉРµРєС‚Р° СЃ РіСЂР°РЅРёС†Р°РјРё РјРёСЂР°
 local function IsContactWithWorldBorder(object)
-  if object.x + object.w / 2 >= love.window.getWidth() then       -- Столкновение с правой границей
+  if object.x + object.w / 2 >= love.window.getWidth() then       -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РїСЂР°РІРѕР№ РіСЂР°РЅРёС†РµР№
     return 4
-  elseif object.x - object.w / 2 <= 0 then                        -- Столкновение с левой границей
+  elseif object.x - object.w / 2 <= 0 then                        -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ Р»РµРІРѕР№ РіСЂР°РЅРёС†РµР№
     return 3
-  elseif object.y - object.h / 2 <= 0 then                        -- Столкновение с нижней границей
+  elseif object.y - object.h / 2 <= 0 then                        -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РЅРёР¶РЅРµР№ РіСЂР°РЅРёС†РµР№
     return 2
-  elseif object.y + object.h / 2 >= love.window.getHeight() then  -- Столкновение с верхней границей
+  elseif object.y + object.h / 2 >= love.window.getHeight() then  -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РІРµСЂС…РЅРµР№ РіСЂР°РЅРёС†РµР№
     return 1
-  else                                                            -- Столкновение отсутствует
+  else                                                            -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
     return 0
   end
 end
 
--- Функция, двигающая игровой объект
+-- Р¤СѓРЅРєС†РёСЏ, РґРІРёРіР°СЋС‰Р°СЏ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
 local function MoveGameObject(gameObject)
   local contact = IsContactWithWorldBorder(gameObject)
   if contact == 1 or contact == 2 then
@@ -41,26 +41,26 @@ local function MoveGameObject(gameObject)
   gameObject.y = gameObject.y + gameObject.ySpeed
 end
 
--- Патаметры героя
+-- РџР°С‚Р°РјРµС‚СЂС‹ РіРµСЂРѕСЏ
 local hero = {
-  mode = "fill",                    -- Режим отрисовки
-  x = 200,                          -- x-координата центра
-  y = 200,                          -- y-координата центра
-  w = 40,                           -- Ширина
-  h = 40,                           -- Высота
-  color = {                         -- Цвет
+  mode = "fill",                    -- Р РµР¶РёРј РѕС‚СЂРёСЃРѕРІРєРё
+  x = 200,                          -- x-РєРѕРѕСЂРґРёРЅР°С‚Р° С†РµРЅС‚СЂР°
+  y = 200,                          -- y-РєРѕРѕСЂРґРёРЅР°С‚Р° С†РµРЅС‚СЂР°
+  w = 40,                           -- РЁРёСЂРёРЅР°
+  h = 40,                           -- Р’С‹СЃРѕС‚Р°
+  color = {                         -- Р¦РІРµС‚
     255,                              -- Red
     255,                              -- Green
     255,                              -- Blue
-    255                               -- Прозрачность
+    255                               -- РџСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ
   },                                
-  isClicked = false,                -- Флаг нажатия на героя
+  isClicked = false,                -- Р¤Р»Р°Рі РЅР°Р¶Р°С‚РёСЏ РЅР° РіРµСЂРѕСЏ
 }
 
--- Функция, определения щелчка миши по герою
--- Вход:
---  x - x-координата щелчка мыши
---  y - y-координата щелчка мыши
+-- Р¤СѓРЅРєС†РёСЏ, РѕРїСЂРµРґРµР»РµРЅРёСЏ С‰РµР»С‡РєР° РјРёС€Рё РїРѕ РіРµСЂРѕСЋ
+-- Р’С…РѕРґ:
+--  x - x-РєРѕРѕСЂРґРёРЅР°С‚Р° С‰РµР»С‡РєР° РјС‹С€Рё
+--  y - y-РєРѕРѕСЂРґРёРЅР°С‚Р° С‰РµР»С‡РєР° РјС‹С€Рё
 function hero:IsMouseReleased(x, y) 
   return x <= self.x + self.w / 2 and
          x >= self.x - self.w / 2 and
@@ -68,7 +68,7 @@ function hero:IsMouseReleased(x, y)
          y >= self.y - self.h / 2
 end
 
--- Фунекция отрисовки героя
+-- Р¤СѓРЅРµРєС†РёСЏ РѕС‚СЂРёСЃРѕРІРєРё РіРµСЂРѕСЏ
 function hero:Draw() 
   if self.isClicked then
     self.x = love.mouse.getX()
@@ -77,14 +77,14 @@ function hero:Draw()
   DrawGameObject(self)
 end
 
--- Функция, определяющая столкновение героя с объектами
--- Вход:
---  e - список врагов
--- Выход:
---  true - зафиксировано столкновение
---  false - стлкновение не зафиксировано
+-- Р¤СѓРЅРєС†РёСЏ, РѕРїСЂРµРґРµР»СЏСЋС‰Р°СЏ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ РіРµСЂРѕСЏ СЃ РѕР±СЉРµРєС‚Р°РјРё
+-- Р’С…РѕРґ:
+--  e - СЃРїРёСЃРѕРє РІСЂР°РіРѕРІ
+-- Р’С‹С…РѕРґ:
+--  true - Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅРѕ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ
+--  false - СЃС‚Р»РєРЅРѕРІРµРЅРёРµ РЅРµ Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅРѕ
 function hero:IsContact(e)
-  -- Проверяем столкновение с врагами
+  -- РџСЂРѕРІРµСЂСЏРµРј СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РІСЂР°РіР°РјРё
   for i = 1, #e do
     if (math.abs(e[i].x - self.x) <= (e[i].w / 2 + self.w / 2)) and
        (math.abs(e[i].y - self.y) <= (e[i].h / 2 + self.h / 2)) then
@@ -92,7 +92,7 @@ function hero:IsContact(e)
     end
   end
   
-  -- Проверяем столкновение с границами мира
+  -- РџСЂРѕРІРµСЂСЏРµРј СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РіСЂР°РЅРёС†Р°РјРё РјРёСЂР°
   if IsContactWithWorldBorder(self) > 0 then
     return true
   end
@@ -177,30 +177,30 @@ function enemi4:Draw() DrawGameObject(self) end
 function enemi4:Move() MoveGameObject(self) end
 
 local enemies = {enemi1, enemi2, enemi3, enemi4}
-local gameObjects = {hero = hero, enemi1 = enemi1, enemi2 = enemi2, enemi3 = enemi3, enemi4 = enemi4}  -- Таблица игровых объектов
+local gameObjects = {hero = hero, enemi1 = enemi1, enemi2 = enemi2, enemi3 = enemi3, enemi4 = enemi4}  -- РўР°Р±Р»РёС†Р° РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ
 
--- Функция, выполняемая перед запуском
+-- Р¤СѓРЅРєС†РёСЏ, РІС‹РїРѕР»РЅСЏРµРјР°СЏ РїРµСЂРµРґ Р·Р°РїСѓСЃРєРѕРј
 function love.load()
   love.window.setTitle("Scalper Test")
   love.window.setMode(400, 400, {})
 end
 
--- Функция обновления статуса игры
+-- Р¤СѓРЅРєС†РёСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚Р°С‚СѓСЃР° РёРіСЂС‹
 function love.update(dt)
-  -- Двигаем врагов
+  -- Р”РІРёРіР°РµРј РІСЂР°РіРѕРІ
   for i = 1, #enemies do enemies[i]:Move() end
   
-  -- Проверка коллизий
+  -- РџСЂРѕРІРµСЂРєР° РєРѕР»Р»РёР·РёР№
   if hero:IsContact(enemies) then hero.isClicked = false end
 end
 
--- Функция отрисовки сцены
+-- Р¤СѓРЅРєС†РёСЏ РѕС‚СЂРёСЃРѕРІРєРё СЃС†РµРЅС‹
 function love.draw()
-  -- Цикл перерисовки всех игровых объектов
+  -- Р¦РёРєР» РїРµСЂРµСЂРёСЃРѕРІРєРё РІСЃРµС… РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ
   for key, val in pairs(gameObjects) do val:Draw() end
 end
 
--- Функция обработки ожатия клавиши мыши
+-- Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё РѕР¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё РјС‹С€Рё
 function love.mousereleased(x, y, button)
   if button == "l" and gameObjects.hero:IsMouseReleased(x, y) then
     gameObjects.hero.isClicked = true
