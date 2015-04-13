@@ -31,13 +31,17 @@ end
 -- Функция, двигающая игровой объект
 local function MoveGameObject(gameObject)
   local contact = IsContactWithWorldBorder(gameObject)
-  if contact == 1 or contact == 2 then
-    gameObject.ySpeed = -gameObject.ySpeed
-  elseif contact == 3 or contact == 4 then
+  if contact == 3 or contact == 4 then
     gameObject.xSpeed = -gameObject.xSpeed
   end
   
   gameObject.x = gameObject.x + gameObject.xSpeed
+  
+  contact = IsContactWithWorldBorder(gameObject)
+  if contact == 1 or contact == 2 then
+    gameObject.ySpeed = -gameObject.ySpeed
+  end
+  
   gameObject.y = gameObject.y + gameObject.ySpeed
 end
 
