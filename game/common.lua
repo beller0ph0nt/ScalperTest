@@ -1,9 +1,9 @@
-local f = {}
+п»їlocal f = {}
 
 --*************************************************
--- Функция, рисующая стандартный игровой объект
--- Вход:
---  gameObject - игровой объект
+-- Р¤СѓРЅРєС†РёСЏ, СЂРёСЃСѓСЋС‰Р°СЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
+-- Р’С…РѕРґ:
+--  gameObject - РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
 --*************************************************
 function f.DrawGameObject(gameObject)
   love.graphics.setColor(gameObject.color)
@@ -15,41 +15,41 @@ function f.DrawGameObject(gameObject)
 end
 
 --*************************************************
--- Функция, проверяющая столкновение объекта с 
--- границами мира
+-- Р¤СѓРЅРєС†РёСЏ, РїСЂРѕРІРµСЂСЏСЋС‰Р°СЏ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ РѕР±СЉРµРєС‚Р° СЃ 
+-- РіСЂР°РЅРёС†Р°РјРё РјРёСЂР°
 --*************************************************
 function f.IsContactWithWorldBorder(object)
-  if object.x + object.w / 2 >= love.window.getWidth() then       -- Столкновение с правой границей
+  if object.x + object.w / 2 >= love.window.getWidth() then       -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РїСЂР°РІРѕР№ РіСЂР°РЅРёС†РµР№
     return 4
-  elseif object.x - object.w / 2 <= 0 then                        -- Столкновение с левой границей
+  elseif object.x - object.w / 2 <= 0 then                        -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ Р»РµРІРѕР№ РіСЂР°РЅРёС†РµР№
     return 3
-  elseif object.y - object.h / 2 <= 0 then                        -- Столкновение с верхней границей
+  elseif object.y - object.h / 2 <= 0 then                        -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РІРµСЂС…РЅРµР№ РіСЂР°РЅРёС†РµР№
     return 2
-  elseif object.y + object.h / 2 >= love.window.getHeight() then  -- Столкновение с нижней границей
+  elseif object.y + object.h / 2 >= love.window.getHeight() then  -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РЅРёР¶РЅРµР№ РіСЂР°РЅРёС†РµР№
     return 1
-  else                                                            -- Столкновение отсутствует
+  else                                                            -- РЎС‚РѕР»РєРЅРѕРІРµРЅРёРµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
     return 0
   end
 end
 
 --*************************************************
--- Функция, двигающая игровой объект
+-- Р¤СѓРЅРєС†РёСЏ, РґРІРёРіР°СЋС‰Р°СЏ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
 --*************************************************
 function f.MoveGameObject(gameObject)
-  local contact = f.IsContactWithWorldBorder(gameObject)          -- Определяем, было ли столкновение с границами мира
+  local contact = f.IsContactWithWorldBorder(gameObject)          -- РћРїСЂРµРґРµР»СЏРµРј, Р±С‹Р»Рѕ Р»Рё СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РіСЂР°РЅРёС†Р°РјРё РјРёСЂР°
   if contact == 3 then
-    gameObject.xSpeed, gameObject.x = -gameObject.xSpeed, gameObject.w / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.xSpeed, gameObject.x = -gameObject.xSpeed, gameObject.w / 2  -- Р§С‚РѕР±С‹ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚ РЅРµ РІС‹С…РѕРґРёР» Р·Р° РіСЂР°РЅРёС†С‹
   elseif contact == 4 then
-    gameObject.xSpeed, gameObject.x = -gameObject.xSpeed, love.window.getWidth() - gameObject.w / 2 -- Чтобы игровой объект не выходил за границы
+    gameObject.xSpeed, gameObject.x = -gameObject.xSpeed, love.window.getWidth() - gameObject.w / 2 -- Р§С‚РѕР±С‹ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚ РЅРµ РІС‹С…РѕРґРёР» Р·Р° РіСЂР°РЅРёС†С‹
   end
   
   gameObject.x = gameObject.x + gameObject.xSpeed
   
   contact = f.IsContactWithWorldBorder(gameObject)
   if contact == 1 then
-    gameObject.ySpeed, gameObject.y = -gameObject.ySpeed, love.window.getHeight() - gameObject.h / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.ySpeed, gameObject.y = -gameObject.ySpeed, love.window.getHeight() - gameObject.h / 2  -- Р§С‚РѕР±С‹ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚ РЅРµ РІС‹С…РѕРґРёР» Р·Р° РіСЂР°РЅРёС†С‹
   elseif contact == 2 then
-    gameObject.ySpeed, gameObject.y = -gameObject.ySpeed, gameObject.h / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.ySpeed, gameObject.y = -gameObject.ySpeed, gameObject.h / 2  -- Р§С‚РѕР±С‹ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚ РЅРµ РІС‹С…РѕРґРёР» Р·Р° РіСЂР°РЅРёС†С‹
   end
   
   gameObject.y = gameObject.y + gameObject.ySpeed

@@ -1,4 +1,4 @@
-local common = require('common')  -- Подключение общих функций
+п»їlocal common = require('common')  -- РџРѕРґРєР»СЋС‡РµРЅРёРµ РѕР±С‰РёС… С„СѓРЅРєС†РёР№
 
 local enemi4 = {
   mode = "fill",
