@@ -12,13 +12,15 @@ local enemi1 = {
     255,					-- Голубой
     255						-- Прозрачность
   },
-  xSpeed = 0,
-  ySpeed = 0,
-  speed = 5,			-- Скорость в пункт/сек
-  angle = 45			-- Угол вектора скорости в градусах
+  speed = 0,			-- Скорость в пункт/сек
+  angle = 0				-- Угол вектора скорости в градусах
 }
 
 function enemi1:Draw() common.DrawGameObject(self) end
 function enemi1:Move() common.MoveGameObject(self) end
+function enemi1:Start()
+  love.timer.sleep(1 / speed)
+  self:Move()
+end
 
 return enemi1

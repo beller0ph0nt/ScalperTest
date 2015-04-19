@@ -12,8 +12,8 @@ local enemi4 = {
     255,
     255
   },
-  xSpeed = 0,
-  ySpeed = 0
+  speed = 0,			-- Скорость в пункт/сек
+  angle = 0				-- Угол вектора скорости в градусах
 }
 
 function enemi4:Draw() common.DrawGameObject(self) end

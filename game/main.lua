@@ -1,5 +1,7 @@
 ﻿-- Массив скоростей без нулевого элемента, т.к. игровой объект должен двигаться всегда
-local Speed = {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+local Speed = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+local maxSpeed = 10
+local maxAngle = 360
 
 local hero = require('hero')      -- Подключение главного героя
 local enemi1 = require('enemi1')  -- Подключение 1-го врага
@@ -30,16 +32,18 @@ end
 --*************************************************
 function love.draw()
   for key, val in pairs(gameObjects) do val:Draw() end  -- Цикл перерисовки всех игровых объектов
+  love.graphics.setColor({255, 255, 255, 150})
+  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 5);
 end
 
 --*************************************************
--- Функция обработки ожатия клавиши мыши
+-- Функция обработки отжатия клавиши мыши
 --*************************************************
 function love.mousereleased(x, y, button)
   if button == "l" and gameObjects.hero:IsMouseReleased(x, y) then
     gameObjects.hero.isClicked = true
     for i = 1, #enemies do
-      enemies[i].xSpeed, enemies[i].ySpeed = Speed[math.random(1, #Speed)], Speed[math.random(1, #Speed)] -- Генерируем скорость
+      enemies[i].speed, enemies[i].angle = math.random(1, maxSpeed), math.random(1, maxAngle) -- Генерируем скорость и угол
     end
   end
 end

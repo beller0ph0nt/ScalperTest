@@ -38,21 +38,24 @@ end
 function f.MoveGameObject(gameObject)
   local contact = f.IsContactWithWorldBorder(gameObject)          -- Определяем, было ли столкновение с границами мира
   if contact == 3 then
-    gameObject.xSpeed, gameObject.x = -gameObject.xSpeed, gameObject.w / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.x = gameObject.w / 2  -- Чтобы игровой объект не выходил за границы
+	gameObject.angle = math.deg(math.atan2(math.sin(math.rad(gameObject.angle)), -math.cos(math.rad(gameObject.angle))))
   elseif contact == 4 then
-    gameObject.xSpeed, gameObject.x = -gameObject.xSpeed, love.window.getWidth() - gameObject.w / 2 -- Чтобы игровой объект не выходил за границы
+    gameObject.x = love.window.getWidth() - gameObject.w / 2 -- Чтобы игровой объект не выходил за границы
+    gameObject.angle = math.deg(math.atan2(math.sin(math.rad(gameObject.angle)), -math.cos(math.rad(gameObject.angle))))
   end
   
-  gameObject.x = gameObject.x + gameObject.xSpeed
+  gameObject.x = gameObject.x + gameObject.speed * math.cos(math.rad(gameObject.angle))
   
-  contact = f.IsContactWithWorldBorder(gameObject)
   if contact == 1 then
-    gameObject.ySpeed, gameObject.y = -gameObject.ySpeed, love.window.getHeight() - gameObject.h / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.y = love.window.getHeight() - gameObject.h / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.angle = math.deg(math.atan2(-math.sin(math.rad(gameObject.angle)), math.cos(math.rad(gameObject.angle))))
   elseif contact == 2 then
-    gameObject.ySpeed, gameObject.y = -gameObject.ySpeed, gameObject.h / 2  -- Чтобы игровой объект не выходил за границы
+	gameObject.y = gameObject.h / 2  -- Чтобы игровой объект не выходил за границы
+    gameObject.angle = math.deg(math.atan2(-math.sin(math.rad(gameObject.angle)), math.cos(math.rad(gameObject.angle))))
   end
   
-  gameObject.y = gameObject.y + gameObject.ySpeed
+  gameObject.y = gameObject.y + gameObject.speed * math.sin(math.rad(gameObject.angle))
 end
 
 return f
